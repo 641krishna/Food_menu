@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Badge from '@mui/material/Badge';
@@ -11,6 +11,8 @@ import Table from 'react-bootstrap/esm/Table';
 import { DLT } from '../Redux/actions/actions';
 
 const Header = () => {
+
+    const [price, setPrice] = useState(0);
 
     const getData = useSelector((state) => state.cartreducer.carts);
     console.log(getData)
@@ -30,6 +32,19 @@ const Header = () => {
     const dlt = (id) => {
         dispatch(DLT(id))
     }
+
+    const total = () => {
+        let price = 0;
+        getData.map((ele, k) => {
+            price = ele.price * ele.qnty + price;
+        })
+        setPrice(price);
+    }
+    useEffect(() => {
+        total()
+    }, [total])
+
+
     return (
         <>
             <Navbar bg="dark" variant="dark" style={{ height: '60px' }}>
@@ -97,7 +112,7 @@ const Header = () => {
                                             })
                                         }
                                     </tbody>
-                                    <p className='text-center'><strong>Total : 300</strong></p>
+                                    <p className='text-center'><strong>Total : ₹ {price}</strong></p>
                                 </Table>
                             </div> :
                             <div className="card_details d-flex justify-content-center align-items-center" style={{ width: '15rem', padding: 10, position: 'relative' }}>

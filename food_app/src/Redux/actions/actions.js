@@ -15,3 +15,11 @@ export const DLT = (id) => {
 
 }
 
+// Decrement 
+export const REMOVE = (item) => {
+    return {
+        type: "RMV_ONE",
+        payload: item
+    }
+}
+
